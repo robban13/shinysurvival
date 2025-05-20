@@ -12,6 +12,16 @@ The app requires a .xlsx file with the following specifications.
 Optional requirements: 
 5. One or more clinical columns. This can be things as Age (numerical), Smoking status (Nominal), Tumor stage (Categorical) etc. The app is built to recognize numerical, nominal and categorical values.
 
+# How to launch the application 
+
+1. Open a new script in Rstudio.
+2. Paste and run the following code:
+
+library(Shiny)
+runGitHub(repo = "shinysurvival" ,user = "robban13", ref = "main)
+
+3. The code for the application will be downloaded and the app will be initialized. Happy analysis! 
+
 
 # Usage 
 

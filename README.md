@@ -39,4 +39,5 @@ You can now inspect a univariate cox regression model and a Kaplan-Meier plot.
 6. (Optional): The app includes three tabs, "Data inspection", "Grouping verification" and "Variable distribution" for quick QC check of your data to make sure that they are correctly distributed. For convinence, a couple of common outlier removal and variable transformation options are available in the side menu if needed.
 7. (Optional): There are global settings to change the look of the plots in both the side menu and plot specific settings under each plot.
 
-# Please cite if you used this application for any publication! 
+# Please cite correctly if you used this application for any publication! 
+This application only provides a user interface for easier survival analysis by combining existing libraries. Please make sure to cite them correctly. 

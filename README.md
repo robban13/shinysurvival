@@ -18,6 +18,7 @@ Optional requirements:
 2. Paste and run the following code:
 
 library(Shiny)
+
 runGitHub(repo = "shinysurvival" ,user = "robban13", ref = "main)
 
 3. The code for the application will be downloaded and the app will be initialized. Happy analysis! 

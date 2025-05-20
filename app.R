@@ -12,7 +12,7 @@ library(nortest)       # For additional normality tests
 
 # Define UI for the application
 ui <- fluidPage(
-  titlePanel("Cox Regression and Kaplan-Meier Analysis by Robert Vanagas 0.5"),
+  titlePanel("Cox Regression and Kaplan-Meier Analysis by Robert Vanagas 1.0"),
   
   sidebarLayout(
     sidebarPanel(

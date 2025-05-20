@@ -19,7 +19,7 @@ Optional requirements:
 
 library(Shiny)
 
-runGitHub(repo = "shinysurvival" ,user = "robban13", ref = "main)
+runGitHub(repo = "shinysurvival", user = "robban13", ref = "main)
 
 3. The code for the application will be downloaded and the app will be initialized. Happy analysis! 
 

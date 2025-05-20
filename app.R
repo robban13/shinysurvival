@@ -1,3 +1,15 @@
+# Check for and install missing packages
+required_packages <- c(
+  "shiny", "readxl", "survival", "survminer", "dplyr", "ggplot2", "gridExtra", "DT", "fitdistrplus", "nortest"
+)
+installed_packages <- rownames(installed.packages())
+missing_packages <- setdiff(required_packages, installed_packages)
+if (length(missing_packages)) {
+  install.packages(missing_packages, repos = "https://cloud.r-project.org")
+}
+lapply(required_packages, require, character.only = TRUE)
+
+
 # Load necessary libraries
 library(shiny)
 library(readxl)

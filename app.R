@@ -28,7 +28,11 @@ ui <- fluidPage(
   
   sidebarLayout(
     sidebarPanel(
-      fileInput("file1", "Upload Excel File", accept = c(".xlsx")),
+      fileInput(
+        "file1",
+        "Upload Excel or CSV File",
+        accept = c(".xlsx", ".csv")
+      ),
       actionButton("load_mock", "Load Mock Patient Data"),
       uiOutput("sheet_selector"), # UI for selecting the Excel sheet
       uiOutput("select_vars"), # Dynamic UI for selecting variables
@@ -167,28 +171,50 @@ server <- function(input, output, session) {
   
   # Reactive expression to get sheet names from the uploaded Excel file
   sheet_names <- reactive({
-    if(use_sample()) {
+    if (use_sample()) {
       c("Data")
     } else {
       req(input$file1)
-      excel_sheets(input$file1$datapath)
+      ext <- tools::file_ext(input$file1$datapath)
+      if (tolower(ext) %in% c("xlsx", "xls")) {
+        excel_sheets(input$file1$datapath)
+      } else {
+        NULL
+      }
     }
   })
   
   # Dynamic UI for selecting the sheet from the Excel file
   output$sheet_selector <- renderUI({
-    req(sheet_names())
-    selectInput("sheet", "Select Sheet:", choices = sheet_names(), selected = sheet_names()[1])
+    if (!is.null(sheet_names())) {
+      selectInput(
+        "sheet",
+        "Select Sheet:",
+        choices = sheet_names(),
+        selected = sheet_names()[1]
+      )
+    } else {
+      NULL
+    }
   })
   
   # Reactive expression to read the data from the selected sheet
   dataset <- reactive({
-    if(use_sample()) {
+    if (use_sample()) {
       df <- read.csv(sample_file)
     } else {
       req(input$file1)
-      sheet <- if(!is.null(input$sheet)) input$sheet else excel_sheets(input$file1$datapath)[1]
-      df <- read_excel(input$file1$datapath, sheet = sheet)
+      ext <- tools::file_ext(input$file1$datapath)
+      if (tolower(ext) %in% c("xlsx", "xls")) {
+        sheet <- if (!is.null(input$sheet)) {
+          input$sheet
+        } else {
+          excel_sheets(input$file1$datapath)[1]
+        }
+        df <- read_excel(input$file1$datapath, sheet = sheet)
+      } else {
+        df <- read.csv(input$file1$datapath)
+      }
     }
 
     original_names <- names(df)

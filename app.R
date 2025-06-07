@@ -85,16 +85,8 @@ ui <- fluidPage(
       ),
       
       hr(),
-      actionButton("run_analysis", "Run Analysis"),
+      actionButton("run_analysis", "Run Analysis")
       
-      # Download Buttons for Analysis Plots and Summaries
-      hr(),
-      h4("Download Analysis Outputs"),
-      downloadButton("download_forest_uni", "Download Univariate Forest Plot"),
-      downloadButton("download_forest_multi", "Download Multivariate Forest Plot"),
-      downloadButton("download_km_plot", "Download Kaplan-Meier Plot"),
-      downloadButton("download_schoenfeld_uni", "Download Univariate Schoenfeld Plot"),
-      downloadButton("download_schoenfeld_multi", "Download Multivariate Schoenfeld Plot")
     ),
     
     mainPanel(

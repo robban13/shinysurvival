@@ -2,7 +2,7 @@
 
 This shiny app is aimed to perform survival analysis using Kaplan-Meier and COX regression models. 
 
-The app requires a .xlsx file with the following specifications. 
+The app requires a .xlsx or .csv file with the following specifications.
 
 1. Each row is one patient/sample.
 2. One column specifying numerical survival. This can be in days/months/years. Please note that this should be a numerical value, not a date!
@@ -27,7 +27,7 @@ runGitHub(repo = "shinysurvival", user = "robban13", ref = "main")
 # Usage 
 
 1. Launch application.
-2. Upload your .xlsx file that fulfill the specifications above, or click the "Load Mock Patient Data" button to load the included `mock_patient_data.csv` example dataset. If you have multiple sheets in your .xlsx file, select the sheet in the dropdown menu.
+2. Upload your .xlsx or .csv file that fulfills the specifications above, or click the "Load Mock Patient Data" button to load the included `mock_patient_data.csv` example dataset. If you upload an Excel file with multiple sheets, select the sheet in the dropdown menu.
 3. Select which column contains the event column, numerical survival data.
 4. Select your main variable to analyse:
    4.1 If it is a numerical biomarker value, make sure to tick the "Divide Patients into Groups Based on Biomarker Expression" box. This will stratify the patients into two groups, "High and Low".

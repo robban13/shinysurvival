@@ -29,6 +29,7 @@ ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
       fileInput("file1", "Upload Excel File", accept = c(".xlsx")),
+      actionButton("load_mock", "Load Mock Patient Data"),
       uiOutput("sheet_selector"), # UI for selecting the Excel sheet
       uiOutput("select_vars"), # Dynamic UI for selecting variables
       
@@ -157,43 +158,48 @@ ui <- fluidPage(
 )
 # Define server logic
 server <- function(input, output, session) {
+  sample_file <- "mock_patient_data.csv"
+  use_sample <- reactiveVal(FALSE)
+  observeEvent(input$load_mock, { use_sample(TRUE) })
+  observeEvent(input$file1, { if(!is.null(input$file1)) use_sample(FALSE) })
   
   ####################################### USER INPUT LOGIC ###############################################################  
   
   # Reactive expression to get sheet names from the uploaded Excel file
   sheet_names <- reactive({
-    req(input$file1)
-    excel_sheets(input$file1$datapath)
+    if(use_sample()) {
+      c("Data")
+    } else {
+      req(input$file1)
+      excel_sheets(input$file1$datapath)
+    }
   })
   
   # Dynamic UI for selecting the sheet from the Excel file
   output$sheet_selector <- renderUI({
     req(sheet_names())
-    selectInput("sheet", "Select Sheet:", choices = sheet_names())
+    selectInput("sheet", "Select Sheet:", choices = sheet_names(), selected = sheet_names()[1])
   })
   
   # Reactive expression to read the data from the selected sheet
   dataset <- reactive({
-    req(input$file1, input$sheet)
-    df <- read_excel(input$file1$datapath, sheet = input$sheet)
-    
-    # Store original column names
+    if(use_sample()) {
+      df <- read.csv(sample_file)
+    } else {
+      req(input$file1)
+      sheet <- if(!is.null(input$sheet)) input$sheet else excel_sheets(input$file1$datapath)[1]
+      df <- read_excel(input$file1$datapath, sheet = sheet)
+    }
+
     original_names <- names(df)
-    
-    # Ensure column names are valid for R
     sanitized_names <- make.names(original_names, unique = TRUE)
     names(df) <- sanitized_names
-    
-    # Create a mapping dataframe
     name_mapping <- data.frame(
       sanitized = sanitized_names,
       original = original_names,
       stringsAsFactors = FALSE
     )
-    
-    # Store the mapping as an attribute
     attr(df, "name_mapping") <- name_mapping
-    
     df
   })
   

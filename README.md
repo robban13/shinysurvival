@@ -17,10 +17,11 @@ Optional requirements:
 1. Open a new script in Rstudio.
 2. Paste and run the following code:
 
+```r
 library(shiny)
 
 runGitHub(repo = "shinysurvival", user = "robban13", ref = "main")
-
+```
 3. The code for the application will be downloaded and the app will be initialized. Happy analysis! 
 
 
